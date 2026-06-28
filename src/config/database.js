@@ -4,7 +4,16 @@ const connectDB = async () => {
   if (!uri) {
     throw new Error("MONGODB_URI is not set in environment. Create a .env file or set the variable.");
   }
-  await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try{
+
+    await mongoose.connect(uri)
+      console.log("Database connected");
+    }
+  catch(err){
+    console.error("Database connection failed:", err);
+    process.exit(1);
+  }
 };
 
 module.exports = connectDB;

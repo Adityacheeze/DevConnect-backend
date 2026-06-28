@@ -9,6 +9,7 @@ const profileRouter = require("./routes/profile");
 const requestRouter = require("./routes/request");
 const userRouter = require("./routes/user.js");
 const cors = require("cors");
+const healthRouter = require('./routes/health.js');
 
 app.use(
   cors({
@@ -23,6 +24,7 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+app.use("/", healthRouter);
 
 connectDB()
   .then(() => {
