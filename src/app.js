@@ -29,7 +29,7 @@ app.use("/", healthRouter);
 connectDB()
   .then(() => {
     console.log("Database connected");
-    app.listen(3000, () => {
+    app.listen( process.env.PORT, () => {
         const port = process.env.PORT || 3000;
       console.log(`Server is running on port ${port}`);
     });
