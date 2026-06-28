@@ -9,7 +9,9 @@ const userAuth = async (req, res, next) => {
       res.status(401).send("Login Again");
     }
     // validate the token
-    const decodedObj = jwt.verify(token, "DEV@TINDER_SECRET6278");
+    const secret = process.env.JWT_SECRET;
+    if (!secret) throw new Error("JWT_SECRET is not set in environment. Add it to your .env file.");
+    const decodedObj = jwt.verify(token, secret);
     const { _id } = decodedObj;
     // find the user
     const user = await User.findById(_id);

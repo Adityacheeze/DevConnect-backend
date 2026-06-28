@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const connectDB = async () => {
-  await mongoose.connect(
-    "mongodb+srv://developeraditya24:qUahalmhqRkifE2Q@namastenode.umy13r5.mongodb.net/devTinder"
-  );
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error("MONGODB_URI is not set in environment. Create a .env file or set the variable.");
+  }
+  await mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 };
 
 module.exports = connectDB;
