@@ -513,6 +513,7 @@ const res = axios.post(
   - list all the running applications -> `pm2 list` 
   - stop any process -> `pm2 stop <name of app>`
   - delete any process -> `pm2 delete <name of app>`
+  - restart any process -> `pm2 restart <name of app>`
   - give custom name to your process -> `pm2 start npm --name "DevConnect-backend" -- start`
   
   - nginx config override -> goal is to proxy pass *16.16.138.109/3000* [BE URL] to *16.16.138.109/api/* 
