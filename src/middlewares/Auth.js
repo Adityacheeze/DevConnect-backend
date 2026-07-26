@@ -12,7 +12,7 @@ const userAuth = async (req, res, next) => {
     }
 
     // Verify JWT token
-    const decodedObj = jwt.verify(token, process.env.JWT_SECRET);
+    const decodedObj = jwt.verify(token, "DEV@TINDER_SECRET6278");
     const { _id } = decodedObj;
 
     // Find user in database
