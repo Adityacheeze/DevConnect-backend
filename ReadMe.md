@@ -481,3 +481,11 @@ const res = axios.post(
 );
 ```
 
+# Deployment 
+- signup on AWS
+- launch EC2 instance (t3 micro)
+- create key value pair for login into the machine 
+- `chmod 400 <secret>.pem` [key pair]
+- login to the ec2 instance (machine) using `ssh -i devTinder-secret.pem ubuntu@13.233.xxx.xxx`
+- install node js using cURL 
+- install the correct node version 24.4.1 using `nvm install 24.4.1`
