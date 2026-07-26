@@ -489,3 +489,17 @@ const res = axios.post(
 - login to the ec2 instance (machine) using `ssh -i devTinder-secret.pem ubuntu@13.233.xxx.xxx`
 - install node js using cURL 
 - install the correct node version 24.4.1 using `nvm install 24.4.1`
+- clone frontend and backend repos using github
+
+- Frontend : 
+  - Install dependencies `npm i`
+  - Run the build of the project via `npm run build`
+  - This will create a *dist* folder with the build of your project
+  - update the system `sudo apt update`
+  - install **nginx** : `sudo apt install nginx` [bcz it gives us an http server]
+  - start nginx : `sudo systemctl start nginx`
+  - enable nginx : `sudo systemctl enable nginx`
+  - copy code from dist folder (built files) to nginx http server : this path --> `/var/www/html`
+  using this command `sudo scp -r dist/* /var/www/html/`
+  - enable(expose) port 80, to access the frontend
+- Backend : 
