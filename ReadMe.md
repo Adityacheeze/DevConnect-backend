@@ -502,4 +502,35 @@ const res = axios.post(
   - copy code from dist folder (built files) to nginx http server : this path --> `/var/www/html`
   using this command `sudo scp -r dist/* /var/www/html/`
   - enable(expose) port 80, to access the frontend
+
 - Backend : 
+  - allow EC2 instance public IP on mongo DB atlas (whitelist the IP of EC2 machine so it can access the DB)
+  - intall PM2 -> PM2 is a daemon process manager that will help you manage and keep your application online 24/7 : 
+    use `npm install pm2 -g`
+  - start the backend server using PM2 -> `pm2 start npm -- start`
+  - command to check logs -> `pm2 logs`
+  - clear logs -> `pm2 flush <name of app>`
+  - list all the running applications -> `pm2 list` 
+  - stop any process -> `pm2 stop <name of app>`
+  - delete any process -> `pm2 delete <name of app>`
+  - give custom name to your process -> `pm2 start npm --name "DevConnect-backend" -- start`
+  
+  - nginx config override -> goal is to proxy pass *16.16.138.109/3000* [BE URL] to *16.16.138.109/api/* 
+  
+  nginx config file location : **/etc/nginx/sites-available/default**
+  
+  `sudo nano /etc/nginx/sites-available/default`
+  `server_name 16.16.138.109;`
+
+  ```
+  location /api/ {
+      proxy_pass http://localhost:3000/;
+      proxy_http_version 1.1;
+      proxy_set_header Host $host;
+      proxy_cache_bypass $http_upgrade;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+  }
+  ```
+  - restart nginx : `sudo systemctl restart nginx`
+  - modify BASE_URL in frontend micro-app to `/api`
