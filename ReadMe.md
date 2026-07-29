@@ -535,3 +535,36 @@ const res = axios.post(
   ```
   - restart nginx : `sudo systemctl restart nginx`
   - modify BASE_URL in frontend micro-app to `/api`
+
+
+# React Router giving 404 on Refresh (Nginx)
+
+## Issue
+
+The React app worked normally, but refreshing any client-side route (e.g. `/connections`, `/profile`) returned **404 Not Found**.
+
+## Cause
+
+Nginx was trying to find a physical file for routes /connections instead of serving the React app.
+
+**Incorrect config:**
+
+```nginx
+location / {
+    try_files $uri $uri/ =404;
+}
+```
+
+## Fix
+
+Update the Nginx configuration to always fall back to `index.html`:
+
+```nginx
+location / {
+    try_files $uri $uri/ /index.html;
+}
+```
+
+## Takeaway
+
+For React apps using **BrowserRouter**, configure Nginx to serve `index.html` for unknown routes so that React Router can handle client-side navigation and page refreshes.
