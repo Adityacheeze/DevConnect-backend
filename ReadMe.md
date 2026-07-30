@@ -568,3 +568,12 @@ location / {
 ## Takeaway
 
 For React apps using **BrowserRouter**, configure Nginx to serve `index.html` for unknown routes so that React Router can handle client-side navigation and page refreshes.
+
+
+# DNS - setting custom domain name 
+- purchase domain name form goDaddy 
+- signup on cloudflare and add new domain name 
+- change nameservers on godaddy and point them to cloudflare 
+- update the DNS record on cloudflare : `A devConnect.in 16.16.138.109`
+- enable SSL for website : select flexible option  
+- turn on redirect to HTTPS 
