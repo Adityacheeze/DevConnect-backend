@@ -66,11 +66,11 @@ requestRouter.post("/request/review/:status/:requestId", userAuth, async (req, r
     const isStatusValid = allowedStatus.includes(status);
     if(!isStatusValid) {
       return res.status(400).json({message: "Invalid Status"});
-    }  
+    }
     const connectionRequest = await ConnectionRequestModel.findOne({
       _id: requestId,
       toUserId: loggedInUser._id,
-      status: "interested" 
+      status: "interested"
     });
     if(!connectionRequest) {
       return res.status(404).json({message: "Connection Request Not Found"});
@@ -85,4 +85,31 @@ requestRouter.post("/request/review/:status/:requestId", userAuth, async (req, r
     res.status(500).send("Error : " + err.message);
   }
 })
+
+requestRouter.delete("/request/connection/:userId", userAuth, async (req, res) => {
+  try {
+    const loggedInUser = req.user;
+    const { userId } = req.params;
+
+    const connectionRequest = await ConnectionRequestModel.findOneAndDelete({
+      status: "accepted",
+      $or: [
+        { fromUserId: loggedInUser._id, toUserId: userId },
+        { fromUserId: userId, toUserId: loggedInUser._id },
+      ],
+    });
+
+    if (!connectionRequest) {
+      return res.status(404).json({ message: "Connection Not Found" });
+    }
+
+    res.json({
+      message: "Connection removed successfully",
+      data: connectionRequest,
+    });
+  } catch (err) {
+    res.status(500).send("Error : " + err.message);
+  }
+});
+
 module.exports = requestRouter;
