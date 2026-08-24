@@ -577,3 +577,13 @@ For React apps using **BrowserRouter**, configure Nginx to serve `index.html` fo
 - update the DNS record on cloudflare : `A devConnect.in 16.16.138.109`
 - enable SSL for website : select flexible option  
 - turn on redirect to HTTPS 
+
+
+# Securing our secrets keys 
+- install the dotenv package
+- create a .env file with all the secrets like this : 
+  `
+  DB_CONNECTION_SECRET=<secret>
+  `
+- do `process.env.DB_CONNECTION_SECRET` to access the secret
+- create a copy of the .env file on your ec2 machine and deploy the backend
